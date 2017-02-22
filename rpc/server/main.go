@@ -36,10 +36,12 @@ func main() {
 	// Create a new net listener on port 9000
 	ln, err := net.Listen("tcp", ":9000")
 	if err != nil {
-		log.Fatalln("Listener error: " + err.Error())
+		log.Fatalln(err)
 	}
-	defer ln.Close()
 
+	// http.Serve will close the listener when it's done with it
+	// so there's no need to call defer ln.Close() above.
+	//
 	// At this point, clients can see a service "Arith" with the
 	// method "Arith.Add"
 	//

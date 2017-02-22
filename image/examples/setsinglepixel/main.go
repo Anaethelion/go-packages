@@ -12,7 +12,7 @@ func main() {
 	// Create a 100 by 50 pixels image
 	img := image.NewRGBA(image.Rect(0, 0, 100, 50))
 
-	// Draw a red dot on img at pixel postion (2, 3)
+	// Draw a red dot on img at pixel position (2, 3)
 	//
 	// R - Red, G - Green, B - Blue, A - Alpha.
 	//
@@ -26,7 +26,11 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
 	// Encode and then write img to the file handle f
 	if err := png.Encode(f, img); err != nil {
